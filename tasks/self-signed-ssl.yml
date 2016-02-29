@@ -1,5 +1,5 @@
 ---
-# Copyright 2016, Ian Cordasco
+# Copyright 2015, Rackspace US, Inc.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -13,38 +13,14 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-# Main tasks file for openstack-ansible-barbican
-
-- include: pre-install.yml
-
-- include: messaging-setup.yml
+- include: create-ssl-key.yml
   when: >
     inventory_hostname == groups['barbican_all'][0]
 
-- include: install.yml
-
-- include: post-install.yml
-
-- include: ssl.yml
-
-- include: apache.yml
-
-- include: upstart-init.yml
-
-- include: database-setup.yml
+- include: store-ssl-key.yml
   when: >
     inventory_hostname == groups['barbican_all'][0]
 
-- include: service-setup.yml
+- include: distribute-ssl-key.yml
   when: >
-    inventory_hostname == groups['barbican_all'][0]
-
-- name: Restart Barbican Services
-  service:
-    name: "{{ item }}"
-    state: "restarted"
-  with_items:
-    - "{{ barbican_api_program_name }}"
-
-- name: Flush handlers
-  meta: flush_handlers
+    inventory_hostname != groups['barbican_all'][0]

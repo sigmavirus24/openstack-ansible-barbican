@@ -1,2 +1,135 @@
 ---
-# defaults file for openstack-ansible-barbican
+# Copyright 2016, Ian Cordasco
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+barbican_system_group_name: barbican
+barbican_system_user_name: barbican
+barbican_system_user_comment: Barbican System User
+barbican_system_user_shell: /bin/false
+barbican_system_user_home: "/var/lib/{{ barbican_system_user_name }}"
+barbican_log_directory: /var/log/barbican
+barbican_etc_directory: /etc/barbican
+
+barbican_api_program_name: barbican-api
+barbican_keystone_listener_program_name: barbican-keystone-listener
+barbican_worker_program_name: barbican-worker
+barbican_retry_program_name: barbican-retry
+
+barbican_service_name: barbican
+barbican_service_user_name: barbican
+barbican_service_type: container
+barbican_service_description: "OpenStack Key and Secrets Management (Barbican)"
+barbican_service_project_name: service
+barbican_service_role_names:
+  - admin
+barbican_service_region: RegionOne
+barbican_service_port: 9311
+barbican_service_publicuri_protocol: http
+barbican_service_publicurl: "{{ barbican_service_publicuri_protocol }}://{{ external_lb_vip_address }}:{{ barbican_service_port }}"
+barbican_service_internaluri_protocol: http
+barbican_service_internalurl: "{{ barbican_service_internaluri_protocol }}://{{ internal_lb_vip_address }}:{{ barbican_service_port }}"
+barbican_service_adminuri_protocol: http
+barbican_service_adminurl: "{{ barbican_service_adminuri_protocol }}://{{ internal_lb_vip_address }}:{{ barbican_service_port }}"
+
+barbican_config_overrides: {}
+barbican_policy_overrides: {}
+
+barbican_git_repo: "https://git.openstack.org/openstack/barbican"
+barbican_git_install_branch: c09af59f0f06db9e74a334aaee4c493119384ea7 # master
+barbican_git_dest: "/opt/barbican_{{ barbican_git_install_branch |replace('/', '_') }}"
+
+# Database vars
+barbican_galera_database_name: barbican_service
+barbican_galera_user: barbican
+
+# Rabbit vars
+barbican_rpc_backend: rabbit
+barbican_rabbitmq_userid: barbican
+barbican_rabbitmq_virtualhost: /barbican
+
+# Keystone AuthToken/Middleware
+barbican_keystone_auth_plugin: password
+barbican_service_project_domain_name: Default
+barbican_service_user_domain_name: default
+barbican_service_project_name: service
+
+# Apache configuration vars
+barbican_wsgi_processes: "{{ ansible_processor_vcpus | default (1) * 2 }}"
+barbican_wsgi_threads: 1
+barbican_apache_log_level: info
+barbican_apache_servertokens: "Prod"
+barbican_apache_serversignature: "Off"
+
+keystone_wsgi_processes: "{{ ansible_processor_vcpus | default (1) * 2 }}"
+
+# set barbican_ssl to true to enable SSL configuration on the barbican containers
+barbican_ssl: false
+barbican_ssl_cert: /etc/ssl/certs/barbican.pem
+barbican_ssl_key: /etc/ssl/private/barbican.key
+barbican_ssl_ca_cert: /etc/ssl/certs/barbican-ca.pem
+barbican_ssl_protocol: "{{ ssl_protocol }}"
+barbican_ssl_cipher_suite: "{{ ssl_cipher_suite }}"
+
+# if using a self-signed certificate, set this to true to regenerate it
+barbican_ssl_self_signed_regen: false
+barbican_ssl_self_signed_subject: "/C=US/ST=Texas/L=San Antonio/O=IT/CN={{ internal_lb_vip_address }}/subjectAltName=IP.1={{ external_lb_vip_address }}"
+
+# Set these in user_variables to deploy custom certificates
+#barbican_user_ssl_cert: <path to cert on ansible deployment host>
+#barbican_user_ssl_key: <path to cert on ansible deployment host>
+#barbican_user_ssl_ca_cert: <path to cert on ansible deployment host>
+
+barbican_apt_packages:
+  - python-dev
+  - libssl-dev
+  # - libxml2-dev
+  # - libmysqlclient-dev
+  # - libxslt-dev
+  - libpq-dev
+  - git
+  - libffi-dev
+  - gettext
+  - build-essential
+
+barbican_pip_packages:
+  - alembic
+  - Babel
+  - cffi
+  - cryptography
+  - eventlet
+  - jsonschema
+  - oslo.concurrency
+  - oslo.config
+  - oslo.context
+  - oslo.i18n
+  - oslo.messaging
+  - oslo.middleware
+  - oslo.log
+  - oslo.policy
+  - oslo.serialization
+  - oslo.service
+  - oslo.utils
+  - Paste
+  - PasteDeploy
+  - pbr
+  - pecan
+  - pycadf
+  - pycrypto
+  - pyOpenSSL
+  - ldap3
+  - keystonemiddleware
+  - six
+  - SQLAlchemy
+  - stevedore
+  - webob
