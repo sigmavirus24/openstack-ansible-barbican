@@ -46,7 +46,7 @@ barbican_config_overrides: {}
 barbican_policy_overrides: {}
 
 barbican_git_repo: "https://git.openstack.org/openstack/barbican"
-barbican_git_install_branch: c09af59f0f06db9e74a334aaee4c493119384ea7 # master
+barbican_git_install_branch: 7b0cce90a59e5690d0a53a9dd3ef551103022845
 barbican_git_dest: "/opt/barbican_{{ barbican_git_install_branch |replace('/', '_') }}"
 
 # Database vars
