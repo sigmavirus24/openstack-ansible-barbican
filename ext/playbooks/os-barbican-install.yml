@@ -15,7 +15,7 @@
 # limitations under the License.
 
 - name: Install barbican server
-  hosts: barbican
+  hosts: barbican_all
   max_fail_percentage: 20
   user: root
   pre_tasks:
@@ -47,7 +47,7 @@
     - name: Sort the rabbitmq servers
       dist_sort:
         value_to_lookup: "{{ container_name }}"
-        ref_list: "{{ groups['barbican'] }}"
+        ref_list: "{{ groups['barbican_all'] }}"
         src_list: "{{ rabbitmq_servers }}"
       register: servers
     - name: Set rabbitmq servers
