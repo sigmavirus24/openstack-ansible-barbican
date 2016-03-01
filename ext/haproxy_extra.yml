@@ -1,0 +1,10 @@
+  - service:
+      haproxy_service_name: barbican
+      haproxy_backend_nodes: "{{ groups['barbican_all'] | default([]) }}"
+      haproxy_port: 9311
+      haproxy_balance_type: http
+      haproxy_balance_alg: leastconn
+      haproxy_backend_options:
+        - "forwardfor"
+        - "httpchk /status"
+        - "httplog"
