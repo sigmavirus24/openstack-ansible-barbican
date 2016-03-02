@@ -44,6 +44,7 @@
     mode: "{{ item.mode |default('0750') }}"
   with_items:
     - path: "/etc/barbican"
+    - path: "/etc/barbican/vassals"
     - path: "{{ barbican_system_user_home }}"
   tags:
     - barbican-directories
