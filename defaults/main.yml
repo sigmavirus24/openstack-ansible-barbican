@@ -139,3 +139,4 @@ barbican_pip_packages:
   - SQLAlchemy
   - stevedore
   - webob
+  - barbican
