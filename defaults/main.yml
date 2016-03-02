@@ -44,6 +44,9 @@ barbican_service_adminurl: "{{ barbican_service_adminuri_protocol }}://{{ intern
 
 barbican_config_overrides: {}
 barbican_policy_overrides: {}
+barbican_paste_overrides: {}
+barbican_api_audit_map_overrides: {}
+barbican_vassals_api_overrides: {}
 
 barbican_git_repo: "https://git.openstack.org/openstack/barbican"
 barbican_git_install_branch: 7b0cce90a59e5690d0a53a9dd3ef551103022845
