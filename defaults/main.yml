@@ -94,6 +94,9 @@ barbican_ssl_self_signed_subject: "/C=US/ST=Texas/L=San Antonio/O=IT/CN={{ inter
 #barbican_user_ssl_ca_cert: <path to cert on ansible deployment host>
 
 barbican_apt_packages:
+  - apache2
+  - apache2-utils
+  - libapache2-mod-wsgi
   - python-dev
   - libssl-dev
   # - libxml2-dev
