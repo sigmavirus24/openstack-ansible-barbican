@@ -15,15 +15,6 @@
 
 - include: upstart-common-init.yml
   vars:
-    program_name: "{{ barbican_api_program_name }}"
-    service_name: "{{ barbican_service_name }}"
-    system_user: "{{ barbican_system_user_name }}"
-    system_group: "{{ barbican_system_group_name }}"
-    service_home: "{{ barbican_system_user_home }}"
-    log_directory: "{{ barbican_log_directory }}"
-
-- include: upstart-common-init.yml
-  vars:
     program_name: "{{ barbican_keystone_listener_program_name }}"
     service_name: "{{ barbican_service_name }}"
     system_user: "{{ barbican_system_user_name }}"
