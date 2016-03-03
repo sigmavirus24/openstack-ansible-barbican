@@ -81,12 +81,19 @@
       barbican_venv_download_url: "{{ openstack_repo_url }}/venvs/{{ openstack_release }}/{{ ansible_distribution | lower }}/barbican-{{ openstack_release }}.tgz"
       barbican_config_overrides:
         DEFAULT:
-          host: "0.0.0.0"
+          bind_host: "{{ barbican_service_host }}"
+          bind_port: "{{ barbican_service_port }}"
           rpc_backend: "{{ barbican_rpc_backend }}"
-        api:
-          host: "0.0.0.0"
-        database:
-          connection: "mysql://{{ barbican_galera_user}}:{{ barbican_galera_password}}@{{ barbican_galera_address }}/{{ barbican_galera_database_name }}?charset=utf8"
+          host_href: "http://{{ barbican_rpc_backend }}:{{ barbican_service_port }}"
+          sql_connection: "mysql://{{ barbican_galera_user}}:{{ barbican_galera_password}}@{{ barbican_galera_address }}/{{ barbican_galera_database_name }}?charset=utf8"
+          rabbit_port: "{{ rabbitmq_port }}"
+          rabbit_hosts: "{{ rabbitmq_servers }}"
+          rabbit_userid: "{{ barbican_rabbitmq_userid }}"
+          rabbit_password: "{{ barbican_rabbitmq_password }}"
+          rabbit_virtual_host: "{{ barbican_rabbitmq_virtualhost }}"
+          rabbit_use_ssl: "{{ rabbitmq_use_ssl }}"
+          rabbit_notification_exchange: barbican
+          rabbit_notification_topic: notification
         oslo_messaging_rabbit:
           rabbit_hosts: "{{ rabbitmq_servers }}"
           rabbit_port: "{{ rabbitmq_port }}"
@@ -96,21 +103,23 @@
           rabbit_use_ssl: "{{ rabbitmq_use_ssl }}"
           rabbit_notification_exchange: barbican
           rabbit_notification_topic: notification
-        keystone_authtoken:
-          identity_uri: "{{ keystone_service_internaluri_v3 }}"
+        identity:
+          uri: "{{ keystone_service_internaluri_v3 }}"
           insecure: "{{ keystone_service_internaluri_insecure |bool }}"
-          auth_type: "{{ barbican_keystone_auth_plugin }}"
-          signing_dir: "{{ barbican_system_user_home }}/cache/api"
-          auth_url: "{{ keystone_service_internaluri_v3 }}"
-          auth_uri: "{{ keystone_service_internaluri_v3 }}"
+          version: v3
+          #auth_type: "{{ barbican_keystone_auth_plugin }}"
+          #signing_dir: "{{ barbican_system_user_home }}/cache/api"
+          #auth_url: "{{ keystone_service_internaluri_v3 }}"
+          #auth_uri: "{{ keystone_service_internaluri_v3 }}"
           project_domain_name: "{{ barbican_service_project_domain_name }}"
-          user_domain_name: "{{ barbican_service_user_domain_name }}"
+          #user_domain_name: "{{ barbican_service_user_domain_name }}"
           project_name: "{{ barbican_service_project_name }}"
+          domain_name: "{{ barbican_service_user_domain_name }}"
           username: "{{ barbican_service_user_name }}"
           password: "{{ barbican_service_password }}"
-          memcached_servers: "{{ memcached_servers }}"
-          token_cache_time: 300
-          revocation_cache_time: 60
+          #memcached_servers: "{{ memcached_servers }}"
+          #token_cache_time: 300
+          #revocation_cache_time: 60
       tags:
         - "os-barbican"
     - { role: "openstack_openrc", tags: [ "openstack-openrc" ] }
