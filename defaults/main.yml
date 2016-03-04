@@ -20,6 +20,7 @@ barbican_system_user_shell: /bin/false
 barbican_system_user_home: "/var/lib/{{ barbican_system_user_name }}"
 barbican_log_directory: /var/log/barbican
 barbican_etc_directory: /etc/barbican
+barbican_vassals_directory: "{{ barbican_etc_directory }}/vassals"
 
 barbican_api_program_name: barbican-api
 barbican_keystone_listener_program_name: barbican-keystone-listener
@@ -139,5 +140,6 @@ barbican_pip_packages:
   - six
   - SQLAlchemy
   - stevedore
+  - uwsgi
   - webob
   - barbican
