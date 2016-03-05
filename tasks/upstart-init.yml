@@ -15,8 +15,8 @@
 
 - include: upstart-common-init.yml
   vars:
-    program_name: "uwsgi"
-    program_config_options: "--master --die-on-term --emperor {{ barbican_vassals_directory }}"
+    program_name: "{{ barbican_uwsgi_program_name }}"
+    program_config_options: "{{ barbican_uwsgi_options }}"
     service_name: "{{ barbican_service_name }}"
     system_user: "{{ barbican_system_user_name }}"
     system_group: "{{ barbican_system_group_name }}"

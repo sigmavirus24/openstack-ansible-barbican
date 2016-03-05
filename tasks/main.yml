@@ -25,10 +25,6 @@
 
 - include: post-install.yml
 
-#- include: ssl.yml
-
-#- include: apache.yml
-
 - include: upstart-init.yml
 
 - include: database-setup.yml
@@ -44,7 +40,7 @@
     name: "{{ item }}"
     state: "restarted"
   with_items:
-    - "{{ barbican_api_program_name }}"
+    - "{{ barbican_uwsgi_program_name }}"
 
 - name: Flush handlers
   meta: flush_handlers

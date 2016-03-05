@@ -26,6 +26,8 @@ barbican_api_program_name: barbican-api
 barbican_keystone_listener_program_name: barbican-keystone-listener
 barbican_worker_program_name: barbican-worker
 barbican_retry_program_name: barbican-retry
+barbican_uwsgi_program_name: uwsgi
+barbican_uwsgi_options: "--master --die-on-term --emperor {{ barbican_vassals_directory }}"
 
 barbican_service_name: barbican
 barbican_service_user_name: barbican
