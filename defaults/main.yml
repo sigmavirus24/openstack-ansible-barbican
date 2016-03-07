@@ -31,7 +31,7 @@ barbican_uwsgi_options: "--master --die-on-term --emperor {{ barbican_vassals_di
 
 barbican_service_name: barbican
 barbican_service_user_name: barbican
-barbican_service_type: container
+barbican_service_type: key-manager
 barbican_service_description: "OpenStack Key and Secrets Management (Barbican)"
 barbican_service_project_name: service
 barbican_service_role_names:
@@ -80,7 +80,6 @@ barbican_apache_serversignature: "Off"
 
 keystone_wsgi_processes: "{{ ansible_processor_vcpus | default (1) * 2 }}"
 
-# set barbican_ssl to true to enable SSL configuration on the barbican containers
 barbican_ssl: false
 barbican_ssl_cert: /etc/ssl/certs/barbican.pem
 barbican_ssl_key: /etc/ssl/private/barbican.key
