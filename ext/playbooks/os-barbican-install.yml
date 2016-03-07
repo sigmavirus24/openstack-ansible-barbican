@@ -104,7 +104,7 @@
           rabbit_notification_exchange: barbican
           rabbit_notification_topic: notification
         identity:
-          uri: "{{ keystone_service_internaluri_v3 }}"
+          uri: "{{ keystone_service_internaluri }}"
           insecure: "{{ keystone_service_internaluri_insecure |bool }}"
           version: v3
           #auth_type: "{{ barbican_keystone_auth_plugin }}"
